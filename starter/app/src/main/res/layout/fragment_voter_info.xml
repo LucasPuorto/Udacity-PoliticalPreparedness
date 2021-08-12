@@ -8,7 +8,7 @@
 
         <variable
             name="viewModel"
-            type="com.udacity.politicalpreparedness.election.VoterInfoViewModel" />
+            type="com.example.android.politicalpreparedness.election.VoterInfoViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

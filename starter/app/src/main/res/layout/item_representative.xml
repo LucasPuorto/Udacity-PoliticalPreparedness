@@ -7,7 +7,7 @@
 
         <variable
             name="representative"
-            type="com.udacity.politicalpreparedness.representative.model.Representative" />
+            type="com.example.android.politicalpreparedness.representative.model.Representative" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
