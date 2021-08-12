@@ -28,7 +28,7 @@ class ElectionListAdapter(private val clickListener: ElectionListener) : ListAda
     //TODO: Create ElectionDiffCallback
     companion object ElectionDiffCallback : DiffUtil.ItemCallback<Election>() {
         override fun areItemsTheSame(oldItem: Election, newItem: Election): Boolean {
-            return oldItem === newItem
+            return oldItem == newItem
         }
 
         override fun areContentsTheSame(oldItem: Election, newItem: Election): Boolean {

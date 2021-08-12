@@ -24,23 +24,27 @@ class ElectionsViewModel(electionDao: ElectionDao) : ViewModel() {
 
     //TODO: Create val and functions to populate live data for upcoming elections from the API and saved elections from local database
     init {
+        getUpcomingElections()
+    }
+
+    fun getUpcomingElections() {
         viewModelScope.launch {
             try {
                 val result = CivicsApi.retrofitService.getElections().elections
 
                 if (result.isNotEmpty()) {
-                    upcomingElections.value = result
+                    upcomingElections.postValue(result)
                 } else {
-                    upcomingElections.value = ArrayList()
+                    upcomingElections.postValue(ArrayList())
                 }
             } catch (e: Exception) {
-                upcomingElections.value = ArrayList()
+                upcomingElections.postValue(ArrayList())
             }
         }
     }
 
     fun navigateToElectionDetails(election: Election) {
-        _navigateToSelectedElection.value = election
+        _navigateToSelectedElection.postValue(election)
     }
 
     fun navigationIsCompleted() {

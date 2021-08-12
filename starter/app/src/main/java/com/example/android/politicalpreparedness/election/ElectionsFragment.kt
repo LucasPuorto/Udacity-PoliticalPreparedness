@@ -45,11 +45,17 @@ class ElectionsFragment : Fragment() {
         setupRecyclerView()
     }
 
+    override fun onResume() {
+        super.onResume()
+        rvAdapterSaved.notifyDataSetChanged()
+        viewModel.getUpcomingElections()
+    }
+
     private fun observables() {
         //TODO: Populate recycler adapters
         viewModel.upcomingElections.observe(viewLifecycleOwner, { elections ->
             elections?.let {
-                rvAdapterUpcoming.submitList(it)
+                rvAdapterSaved.submitList(it)
             }
         })
 
