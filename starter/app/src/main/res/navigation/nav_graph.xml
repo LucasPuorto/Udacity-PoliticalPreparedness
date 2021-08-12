@@ -18,7 +18,6 @@
             android:id="@+id/action_launchFragment_to_representativeFragment"
             app:destination="@id/representativeFragment" />
     </fragment>
-
     <fragment
         android:id="@+id/representativeFragment"
         android:name="com.example.android.politicalpreparedness.representative.DetailFragment"
@@ -44,8 +43,7 @@
         android:label="fragment_elections"
         tools:layout="@layout/fragment_election">
         <action
-            android:id="@+id/action_electionsFragment_self"
-            app:destination="@id/electionsFragment" />
+            android:id="@+id/action_electionsFragment_to_voterInfoFragment"
+            app:destination="@id/voterInfoFragment" />
     </fragment>
-
 </navigation>
