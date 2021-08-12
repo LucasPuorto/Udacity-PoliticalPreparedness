@@ -15,4 +15,7 @@
     <string name="zip">Zip</string>
     <string name="find_my_representative">find my representative</string>
     <string name="use_my_location">use my location</string>
+    <string name="my_representatives">My Representatives</string>
+    <string name="permission_required">Permissão required</string>
+    <string name="settings">settings</string>
 </resources>
