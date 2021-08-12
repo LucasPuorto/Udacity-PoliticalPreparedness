@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="default_padding">8dp</dimen>
 
     <!-- TODO: Add necessary dimension values -->
     <!-- Margin -->
@@ -12,6 +11,7 @@
 
     <!-- Padding -->
     <dimen name="padding_4">4dp</dimen>
+    <dimen name="padding_8">8dp</dimen>
 
     <!-- Width -->
     <dimen name="with_32">32dp</dimen>
