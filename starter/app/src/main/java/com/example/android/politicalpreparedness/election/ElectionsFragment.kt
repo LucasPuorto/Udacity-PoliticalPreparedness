@@ -22,11 +22,11 @@ class ElectionsFragment : Fragment() {
     }
     private lateinit var binding: FragmentElectionBinding
 
-    private val rvAdapterUpcoming = ElectionListAdapter(ElectionListener {
+    private val upcomingAdapter = ElectionListAdapter(ElectionListener {
         viewModel.navigateToElectionDetails(it)
     })
 
-    private val rvAdapterSaved = ElectionListAdapter(ElectionListener {
+    private val savedAdapter = ElectionListAdapter(ElectionListener {
         viewModel.navigateToElectionDetails(it)
     })
 
@@ -47,7 +47,7 @@ class ElectionsFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        rvAdapterSaved.notifyDataSetChanged()
+        savedAdapter.notifyDataSetChanged()
         viewModel.getUpcomingElections()
     }
 
@@ -55,18 +55,13 @@ class ElectionsFragment : Fragment() {
         //TODO: Populate recycler adapters
         viewModel.upcomingElections.observe(viewLifecycleOwner, { elections ->
             elections?.let {
-                rvAdapterSaved.submitList(it)
+                upcomingAdapter.submitList(it)
             }
         })
 
         viewModel.savedElections.observe(viewLifecycleOwner, { elections ->
             elections?.let {
-                if (it.isEmpty()) {
-//                    setSavedListVisibility(View.INVISIBLE)
-                } else {
-//                    setSavedListVisibility(View.VISIBLE)
-                    rvAdapterSaved.submitList(it)
-                }
+                savedAdapter.submitList(it)
             }
         })
 
@@ -83,8 +78,8 @@ class ElectionsFragment : Fragment() {
 
     //TODO: Initiate recycler adapters
     private fun setupRecyclerView() {
-        binding.rvUpcomingElections.adapter = rvAdapterUpcoming
-        binding.rvSavedElections.adapter = rvAdapterSaved
+        binding.rvUpcomingElections.adapter = upcomingAdapter
+        binding.rvSavedElections.adapter = savedAdapter
     }
 
     //TODO: Refresh adapters when fragment loads
