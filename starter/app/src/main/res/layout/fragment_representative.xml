@@ -36,8 +36,9 @@
             android:layout_height="wrap_content"
             android:autofillHints="postalAddress"
             android:hint="@string/address_line_1"
-            android:text="@{viewModel.address.line1}"
             android:inputType="textPostalAddress"
+            android:text="@{viewModel.address.line1}"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/search_title" />
 
@@ -46,7 +47,7 @@
         <EditText
             android:id="@+id/address_line_2"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:autofillHints="postalAddress"
             android:hint="@string/address_line_2"
             android:inputType="textPostalAddress"
@@ -63,8 +64,8 @@
             android:layout_height="wrap_content"
             android:autofillHints="postalAddress"
             android:hint="@string/city"
-            android:text="@{viewModel.address.city}"
             android:inputType="textPostalAddress"
+            android:text="@{viewModel.address.city}"
             app:layout_constraintEnd_toStartOf="@id/state"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/address_line_2" />
@@ -74,9 +75,9 @@
         <!-- TODO: Add visual styling and content -->
         <Spinner
             android:id="@+id/state"
+            stateValue="@{viewModel.address.state}"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            stateValue="@{viewModel.address.state}"
             android:autofillHints="postalAddress"
             android:inputType="textPostalAddress"
             app:layout_constraintBottom_toBottomOf="@id/city"
@@ -138,7 +139,7 @@
         <!-- TODO: Add Representatives RecyclerView -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/my_representative_recycler"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginStart="@dimen/margin_4"
             android:layout_marginTop="@dimen/margin_8"
@@ -146,6 +147,9 @@
             android:clipToPadding="false"
             android:paddingTop="@dimen/padding_4"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/representative_title"
             motion:listitem="@layout/item_representative" />
 
