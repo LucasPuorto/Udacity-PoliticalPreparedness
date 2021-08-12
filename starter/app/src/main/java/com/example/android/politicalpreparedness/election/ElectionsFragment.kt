@@ -22,12 +22,17 @@ class ElectionsFragment : Fragment() {
     }
     private lateinit var binding: FragmentElectionBinding
 
-    private val rvAdapters = ElectionListAdapter(ElectionListener {
+    private val rvAdapterUpcoming = ElectionListAdapter(ElectionListener {
+        viewModel.navigateToElectionDetails(it)
+    })
+
+    private val rvAdapterSaved = ElectionListAdapter(ElectionListener {
         viewModel.navigateToElectionDetails(it)
     })
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         //TODO: Add ViewModel values and create ViewModel
+        //TODO: Add binding values
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_election, container, false)
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
@@ -38,15 +43,13 @@ class ElectionsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         observables()
         setupRecyclerView()
-        //TODO: Add binding values
-
-        //TODO: Populate recycler adapters
     }
 
     private fun observables() {
+        //TODO: Populate recycler adapters
         viewModel.upcomingElections.observe(viewLifecycleOwner, { elections ->
             elections?.let {
-                rvAdapters.submitList(it)
+                rvAdapterUpcoming.submitList(it)
             }
         })
 
@@ -56,7 +59,7 @@ class ElectionsFragment : Fragment() {
 //                    setSavedListVisibility(View.INVISIBLE)
                 } else {
 //                    setSavedListVisibility(View.VISIBLE)
-                    rvAdapters.submitList(it)
+                    rvAdapterSaved.submitList(it)
                 }
             }
         })
@@ -65,9 +68,7 @@ class ElectionsFragment : Fragment() {
         viewModel.navigateToSelectedElection.observe(viewLifecycleOwner, { election ->
             if (election != null) {
                 findNavController().navigate(
-                    ElectionsFragmentDirections.actionElectionsFragmentToVoterInfoFragment(
-                        election.id, election.division
-                    )
+                    ElectionsFragmentDirections.actionElectionsFragmentToVoterInfoFragment(election.id, election.division)
                 )
                 viewModel.navigationIsCompleted()
             }
@@ -76,8 +77,8 @@ class ElectionsFragment : Fragment() {
 
     //TODO: Initiate recycler adapters
     private fun setupRecyclerView() {
-        binding.rvUpcomingElections.adapter = rvAdapters
-        binding.rvSavedElections.adapter = rvAdapters
+        binding.rvUpcomingElections.adapter = rvAdapterUpcoming
+        binding.rvSavedElections.adapter = rvAdapterSaved
     }
 
     //TODO: Refresh adapters when fragment loads
