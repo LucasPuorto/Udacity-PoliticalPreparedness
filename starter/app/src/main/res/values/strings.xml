@@ -6,4 +6,13 @@
     <!-- Voter Info Fragment -->
     <string name="election_information">Election Information</string>
     <string name="ballot_information">Ballot Information</string>
+
+    <!-- Representative Fragment -->
+    <string name="representative_search">Representative Search</string>
+    <string name="address_line_1">Address Line 1</string>
+    <string name="address_line_2">Address Line 2</string>
+    <string name="city">City</string>
+    <string name="zip">Zip</string>
+    <string name="find_my_representative">find my representative</string>
+    <string name="use_my_location">use my location</string>
 </resources>

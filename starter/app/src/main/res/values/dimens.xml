@@ -3,9 +3,21 @@
     <dimen name="default_padding">8dp</dimen>
 
     <!-- TODO: Add necessary dimension values -->
+    <!-- Margin -->
     <dimen name="margin_4">4dp</dimen>
     <dimen name="margin_8">8dp</dimen>
     <dimen name="margin_16">16dp</dimen>
     <dimen name="margin_24">24dp</dimen>
     <dimen name="margin_32">32dp</dimen>
+
+    <!-- Padding -->
+    <dimen name="padding_4">4dp</dimen>
+
+    <!-- Width -->
+    <dimen name="with_32">32dp</dimen>
+    <dimen name="width_75">75dp</dimen>
+
+    <!-- Height -->
+    <dimen name="height_32">32dp</dimen>
+    <dimen name="height_75">75dp</dimen>
 </resources>
