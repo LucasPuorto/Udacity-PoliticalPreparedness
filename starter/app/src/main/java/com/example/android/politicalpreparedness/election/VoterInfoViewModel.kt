@@ -42,13 +42,11 @@ class VoterInfoViewModel(electionId: Int, division: Division, private val electi
 
     private fun showListOfVoterInfo(electionId: Int, division: Division) {
         viewModelScope.launch {
-//            val voterInfoAddress = "${division.state}, ${division.country}"
-            val voterInfoAddress = "1263 Pacific Ave. Kansas City KS"
+            val voterInfoAddress = "${division.state}, ${division.country}"
 
             try {
                 val voterInfoResponse =
-//                    CivicsApi.retrofitService.getVoterInfo(voterInfoAddress, electionId)
-                    CivicsApi.retrofitService.getVoterInfo(voterInfoAddress, 2000)
+                    CivicsApi.retrofitService.getVoterInfo(voterInfoAddress, electionId)
 
                 _selectedElection.postValue(voterInfoResponse.election)
 
