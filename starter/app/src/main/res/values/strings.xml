@@ -6,6 +6,10 @@
     <!-- Voter Info Fragment -->
     <string name="election_information">Election Information</string>
     <string name="ballot_information">Ballot Information</string>
+    <string name="follow">follow</string>
+    <string name="unfollow">unfollow</string>
+    <string name="election_saved">election saved</string>
+    <string name="election_deleted">election_deleted</string>
 
     <!-- Representative Fragment -->
     <string name="representative_search">Representative Search</string>
@@ -18,4 +22,6 @@
     <string name="my_representatives">My Representatives</string>
     <string name="permission_required">Permissão required</string>
     <string name="settings">settings</string>
+    <string name="voting_locations">Voting Locations</string>
+    <string name="address_information">Address Information</string>
 </resources>
