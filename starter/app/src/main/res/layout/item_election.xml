@@ -28,7 +28,7 @@
 
         <TextView
             android:id="@+id/election_date"
-            dateString="@{election.electionDay}"
+            date="@{election.electionDay}"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_4"

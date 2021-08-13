@@ -13,6 +13,7 @@ import androidx.fragment.app.viewModels
 import com.example.android.politicalpreparedness.R
 import com.example.android.politicalpreparedness.database.ElectionDatabase
 import com.example.android.politicalpreparedness.databinding.FragmentVoterInfoBinding
+import com.example.android.politicalpreparedness.network.models.AdministrationBody
 
 class VoterInfoFragment : Fragment() {
 
@@ -27,8 +28,10 @@ class VoterInfoFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_voter_info, container, false)
-        binding.lifecycleOwner = this
-        binding.viewModel = viewModel
+        binding.apply {
+            lifecycleOwner = this@VoterInfoFragment
+            binding.viewModel = viewModel
+        }
 
         return binding.root
     }
@@ -39,60 +42,71 @@ class VoterInfoFragment : Fragment() {
     }
 
     private fun observes() {
-        /**
-         * Hint: You will need to ensure proper data is provided from previous fragment.
-         */
         viewModel.run {
             electionAdministrationBody.observe(viewLifecycleOwner, { administrationBody ->
-                binding.addressGroup.visibility = if (administrationBody.correspondenceAddress != null) View.VISIBLE else View.GONE
-
-                if (administrationBody.ballotInfoUrl != null) {
-                    binding.stateBallot.apply {
-                        visibility = View.VISIBLE
-                        setOnClickListener {
-                            loadUrlIntent(administrationBody.ballotInfoUrl)
-                        }
-                    }
-                } else {
-                    binding.stateBallot.visibility = View.GONE
-                }
-
-                if (administrationBody.votingLocationFinderUrl != null) {
-                    binding.stateLocations.apply {
-                        visibility = View.VISIBLE
-                        setOnClickListener {
-                            loadUrlIntent(administrationBody.votingLocationFinderUrl)
-                        }
-                    }
-                } else {
-                    binding.stateLocations.visibility = View.GONE
-                }
+                administrationBody?.let { handlerElectionAdministrationBody(it) }
             })
 
             voterInfoIsSaved.observe(viewLifecycleOwner, { isStateSaved ->
-                when (isStateSaved) {
-                    false -> {
-                        binding.mbtFollow.apply {
-                            text = getString(R.string.follow)
-
-                            setOnClickListener {
-                                viewModel.saveElectionToDatabase()
-                                Toast.makeText(context, R.string.election_saved, Toast.LENGTH_SHORT).show()
-                            }
-                        }
-                    }
-                    true -> {
-                        binding.mbtFollow.apply {
-                            text = getString(R.string.unfollow)
-
-                            setOnClickListener {
-                                viewModel.deleteElectionByIdFromDatabase()
-                                Toast.makeText(context, R.string.election_deleted, Toast.LENGTH_SHORT).show()
-                            }
-                        }
-                    }
-                }
+                isStateSaved?.let { handlerVoterInfoIsSaved(it) }
             })
+        }
+    }
+
+    private fun handlerElectionAdministrationBody(administrationBody: AdministrationBody) {
+        setupCorrespondenceAddressVisibility(administrationBody)
+        verifyBallotInfoUrl(administrationBody)
+        verifyVotingLocationFinderUrl(administrationBody)
+    }
+
+    private fun setupCorrespondenceAddressVisibility(administrationBody: AdministrationBody) {
+        binding.addressGroup.visibility = if (administrationBody.correspondenceAddress != null)
+            View.VISIBLE
+        else
+            View.GONE
+    }
+
+    private fun verifyBallotInfoUrl(administrationBody: AdministrationBody) {
+        binding.stateBallot.apply {
+            if (administrationBody.ballotInfoUrl != null) {
+                visibility = View.VISIBLE
+                setOnClickListener {
+                    loadUrlIntent(administrationBody.ballotInfoUrl)
+                }
+            } else {
+                visibility = View.GONE
+            }
+        }
+    }
+
+    private fun verifyVotingLocationFinderUrl(administrationBody: AdministrationBody) {
+        binding.stateLocations.apply {
+            if (administrationBody.votingLocationFinderUrl != null) {
+                visibility = View.VISIBLE
+                setOnClickListener {
+                    loadUrlIntent(administrationBody.votingLocationFinderUrl)
+                }
+            } else {
+                visibility = View.GONE
+            }
+        }
+    }
+
+    private fun handlerVoterInfoIsSaved(isStateSaved: Boolean) {
+        binding.mbtFollow.apply {
+            if (isStateSaved) {
+                text = getString(R.string.follow)
+                setOnClickListener {
+                    viewModel.saveElectionToDatabase()
+                    Toast.makeText(context, R.string.election_saved, Toast.LENGTH_SHORT).show()
+                }
+            } else {
+                text = getString(R.string.unfollow)
+                setOnClickListener {
+                    viewModel.deleteElectionByIdFromDatabase()
+                    Toast.makeText(context, R.string.election_deleted, Toast.LENGTH_SHORT).show()
+                }
+            }
         }
     }
 

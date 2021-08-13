@@ -17,6 +17,11 @@ class RepresentativeViewModel : ViewModel() {
     private val _address = MutableLiveData<Address>()
     val address: LiveData<Address> get() = _address
 
+    fun onSearchRepresentativesByAddress(address: Address) {
+        _address.value = address
+        findRepresentatives()
+    }
+
     /**
      *  The following code will prove helpful in constructing a representative from the API. This code combines the two nodes of the RepresentativeResponse into a single official :
 
@@ -27,27 +32,22 @@ class RepresentativeViewModel : ViewModel() {
     Note: _representatives in the above code represents the established mutable live data housing representatives
 
      */
-    private fun findMatchingRepresentatives() {
+    private fun findRepresentatives() {
         if (_address.value != null) {
             viewModelScope.launch {
                 try {
-                    val addressString = _address.value?.toFormattedString()
-                    val representativeResponse = addressString?.let { CivicsApi.retrofitService.getRepresentatives(it) }
+                    val address = _address.value?.toFormattedString()
+                    val representatives = address?.let { CivicsApi.retrofitService.getRepresentatives(it) }
 
-                    _representatives.value = representativeResponse?.offices?.flatMap { office ->
-                        office.getRepresentatives(representativeResponse.officials)
+                    _representatives.value = representatives?.offices?.flatMap { office ->
+                        office.getRepresentatives(representatives.officials)
                     }
                 } catch (ex: Exception) {
-                    _representatives.value = ArrayList()
+                    _representatives.value = arrayListOf()
                 }
             }
         } else {
-            _representatives.value = ArrayList()
+            _representatives.value = arrayListOf()
         }
-    }
-
-    fun onSearchRepresentativesByAddress(address: Address) {
-        _address.value = address
-        findMatchingRepresentatives()
     }
 }

@@ -24,54 +24,66 @@ class ElectionsFragment : Fragment() {
     private lateinit var binding: FragmentElectionBinding
 
     private val upcomingAdapter = ElectionListAdapter(ElectionListener {
-        viewModel.navigateToElectionDetails(it)
+        viewModel.navigateToSelectedElection(it)
     })
 
     private val savedAdapter = ElectionListAdapter(ElectionListener {
-        viewModel.navigateToElectionDetails(it)
+        viewModel.navigateToSelectedElection(it)
     })
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_election, container, false)
-        binding.lifecycleOwner = this
-        binding.viewModel = viewModel
+        binding.apply {
+            lifecycleOwner = this@ElectionsFragment
+            viewModel = viewModel
+        }
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         observes()
-        setupRecyclerView()
+        setupRecyclerViews()
     }
 
     @SuppressLint("NotifyDataSetChanged")
     override fun onResume() {
         super.onResume()
         savedAdapter.notifyDataSetChanged()
-        viewModel.getUpcomingElections()
+        viewModel.getElections()
     }
 
     private fun observes() {
         viewModel.run {
             upcomingElections.observe(viewLifecycleOwner, { elections ->
-                elections?.let {
-                    upcomingAdapter.submitList(it)
-                }
+                handlerUpcomingElections(elections)
             })
 
             savedElections.observe(viewLifecycleOwner, { elections ->
-                elections?.let {
-                    savedAdapter.submitList(it)
-                }
+                handlerSavedElections(elections)
             })
 
             navigateToSelectedElection.observe(viewLifecycleOwner, { election ->
-                if (election != null) {
-                    startVoteInfoFragment(election)
-                    viewModel.navigationIsCompleted()
-                }
+                handlerNavigateToSelectedElection(election)
             })
         }
+    }
+
+    private fun handlerUpcomingElections(elections: List<Election>) {
+        elections.let {
+            upcomingAdapter.submitList(it)
+        }
+    }
+
+    private fun handlerSavedElections(elections: List<Election>) {
+        elections.let {
+            savedAdapter.submitList(it)
+        }
+    }
+
+    private fun handlerNavigateToSelectedElection(election: Election) {
+        startVoteInfoFragment(election)
+        viewModel.navigationIsCompleted()
     }
 
     private fun startVoteInfoFragment(election: Election) {
@@ -80,7 +92,7 @@ class ElectionsFragment : Fragment() {
         )
     }
 
-    private fun setupRecyclerView() {
+    private fun setupRecyclerViews() {
         binding.rvUpcomingElections.adapter = upcomingAdapter
         binding.rvSavedElections.adapter = savedAdapter
     }

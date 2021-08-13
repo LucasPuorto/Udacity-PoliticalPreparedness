@@ -29,7 +29,7 @@
 
         <TextView
             android:id="@+id/election_date"
-            dateString="@{viewModel.selectedElection.electionDay}"
+            date="@{viewModel.selectedElection.electionDay}"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_4"

@@ -23,7 +23,7 @@
             app:layout_constraintBottom_toBottomOf="@id/party_name"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/title"
-            app:profileImage="@{representative.official.photoUrl}"
+            app:profilePhoto="@{representative.official.photoUrl}"
             tools:src="@drawable/ic_profile" />
 
         <TextView

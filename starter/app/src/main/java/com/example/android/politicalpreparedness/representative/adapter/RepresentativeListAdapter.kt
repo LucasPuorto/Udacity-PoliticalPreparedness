@@ -24,7 +24,7 @@ class RepresentativeListAdapter : ListAdapter<Representative, RepresentativeList
         holder.bind(item)
     }
 
-    class RepresentativeViewHolder(val binding: ItemRepresentativeBinding) : RecyclerView.ViewHolder(binding.root) {
+    class RepresentativeViewHolder(private val binding: ItemRepresentativeBinding) : RecyclerView.ViewHolder(binding.root) {
 
         companion object {
 

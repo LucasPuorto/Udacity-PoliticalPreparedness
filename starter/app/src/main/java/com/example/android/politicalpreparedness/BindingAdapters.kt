@@ -13,15 +13,15 @@ import java.util.Locale
 
 private const val DATE_PATERN_EEE_MMM_dd_yyyy = "EEE MMM dd yyyy"
 
-@BindingAdapter("dateString")
+@BindingAdapter("date")
 fun dateToString(textView: TextView, date: Date?) {
     if (date != null) {
         textView.text = SimpleDateFormat(DATE_PATERN_EEE_MMM_dd_yyyy, Locale.US).format(date)
     }
 }
 
-@BindingAdapter("profileImage")
-fun fetchImage(view: ImageView, src: String?) {
+@BindingAdapter("profilePhoto")
+fun fetchImageProfilePhoto(view: ImageView, src: String?) {
     src?.let {
         val uri = src.toUri().buildUpon().scheme("https").build()
         Glide.with(view.context)
@@ -33,8 +33,8 @@ fun fetchImage(view: ImageView, src: String?) {
     }
 }
 
-@BindingAdapter("stateValue")
-fun Spinner.setNewValue(value: String?) {
+@BindingAdapter("state")
+fun Spinner.addressStateValue(value: String?) {
     val adapter = toTypedAdapter<String>(this.adapter as ArrayAdapter<*>)
     val position = when (adapter.getItem(0)) {
         is String -> adapter.getPosition(value)

@@ -12,7 +12,11 @@ import com.example.android.politicalpreparedness.network.models.Division
 import com.example.android.politicalpreparedness.network.models.Election
 import kotlinx.coroutines.launch
 
-class VoterInfoViewModel(electionId: Int, division: Division, private val electionDao: ElectionDao) : ViewModel() {
+class VoterInfoViewModel(
+    electionId: Int,
+    division: Division,
+    private val electionDao: ElectionDao
+) : ViewModel() {
 
     private val _electionAdministrationBody = MutableLiveData<AdministrationBody>()
     val electionAdministrationBody: LiveData<AdministrationBody> get() = _electionAdministrationBody
@@ -22,6 +26,9 @@ class VoterInfoViewModel(electionId: Int, division: Division, private val electi
 
     private val _selectedElection = MutableLiveData<Election>()
     val selectedElection: LiveData<Election> get() = _selectedElection
+
+    private val _voterInfoIsSaved = MutableLiveData<Boolean>()
+    val voterInfoIsSaved: LiveData<Boolean> get() = _voterInfoIsSaved
 
     /**
      * Hint: The saved state can be accomplished in multiple ways. It is directly related to how elections are saved/removed from the database.
@@ -60,21 +67,18 @@ class VoterInfoViewModel(electionId: Int, division: Division, private val electi
         }
     }
 
-    private val _voterInfoIsSaved = MutableLiveData<Boolean>()
-    val voterInfoIsSaved: LiveData<Boolean> get() = _voterInfoIsSaved
-
     fun saveElectionToDatabase() {
         viewModelScope.launch {
+            _voterInfoIsSaved.postValue(true)
             _selectedElection.value?.let { electionDao.insertElection(it) }
         }
-        _voterInfoIsSaved.postValue(true)
     }
 
     fun deleteElectionByIdFromDatabase() {
         viewModelScope.launch {
+            _voterInfoIsSaved.postValue(false)
             _selectedElection.value?.let { electionDao.deleteElectionById(it.id) }
         }
-        _voterInfoIsSaved.postValue(false)
     }
 }
 

@@ -10,9 +10,12 @@ import com.example.android.politicalpreparedness.network.CivicsApi
 import com.example.android.politicalpreparedness.network.models.Election
 import kotlinx.coroutines.launch
 
-class ElectionsViewModel(electionDao: ElectionDao) : ViewModel() {
+class ElectionsViewModel(
+    electionDao: ElectionDao
+) : ViewModel() {
 
-    val upcomingElections = MutableLiveData<List<Election>>()
+    private val _upcomingElections = MutableLiveData<List<Election>>()
+    val upcomingElections: LiveData<List<Election>> get() = _upcomingElections
 
     val savedElections = electionDao.getAllElections()
 
@@ -20,26 +23,26 @@ class ElectionsViewModel(electionDao: ElectionDao) : ViewModel() {
     val navigateToSelectedElection: LiveData<Election> get() = _navigateToSelectedElection
 
     init {
-        getUpcomingElections()
+        getElections()
     }
 
-    fun getUpcomingElections() {
+    fun getElections() {
         viewModelScope.launch {
             try {
-                val result = CivicsApi.retrofitService.getElections().elections
+                val elections = CivicsApi.retrofitService.getElections().elections
 
-                if (result.isNotEmpty()) {
-                    upcomingElections.postValue(result)
+                if (elections.isNotEmpty()) {
+                    _upcomingElections.postValue(elections)
                 } else {
-                    upcomingElections.postValue(ArrayList())
+                    _upcomingElections.postValue(arrayListOf())
                 }
             } catch (e: Exception) {
-                upcomingElections.postValue(ArrayList())
+                _upcomingElections.postValue(arrayListOf())
             }
         }
     }
 
-    fun navigateToElectionDetails(election: Election) {
+    fun navigateToSelectedElection(election: Election) {
         _navigateToSelectedElection.postValue(election)
     }
 
@@ -48,7 +51,7 @@ class ElectionsViewModel(electionDao: ElectionDao) : ViewModel() {
     }
 }
 
-class ElectionsViewModelFactory(private val electionDao: ElectionDao): ViewModelProvider.Factory {
+class ElectionsViewModelFactory(private val electionDao: ElectionDao) : ViewModelProvider.Factory {
 
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(ElectionsViewModel::class.java)) {

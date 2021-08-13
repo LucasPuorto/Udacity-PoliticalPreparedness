@@ -39,26 +39,37 @@ class DetailFragment : Fragment() {
     private lateinit var binding: FragmentRepresentativeBinding
     private val viewModel: RepresentativeViewModel by viewModels()
 
+    private val representativeAdapter = RepresentativeListAdapter()
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_representative, container, false)
-        binding.lifecycleOwner = this
-        binding.viewModel = viewModel
-
-        ArrayAdapter.createFromResource(binding.root.context, R.array.states, android.R.layout.simple_spinner_item).also { adapter ->
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            binding.state.adapter = adapter
+        binding.apply {
+            lifecycleOwner = this@DetailFragment
+            viewModel = viewModel
         }
 
-        val representativeAdapter = RepresentativeListAdapter()
+        setupSpinnerAdapter()
+
         binding.myRepresentativeRecycler.adapter = representativeAdapter
 
-        observe(representativeAdapter)
+        observe()
 
         setupClickListeners()
         return binding.root
     }
 
-    private fun observe(representativeAdapter: RepresentativeListAdapter) {
+    private fun setupSpinnerAdapter() {
+        ArrayAdapter.createFromResource(
+            binding.root.context,
+            R.array.states,
+            android.R.layout.simple_spinner_item
+        ).also { adapter ->
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            binding.state.adapter = adapter
+        }
+    }
+
+    private fun observe() {
         viewModel.representatives.observe(viewLifecycleOwner, { reps ->
             reps.let {
                 representativeAdapter.submitList(it)

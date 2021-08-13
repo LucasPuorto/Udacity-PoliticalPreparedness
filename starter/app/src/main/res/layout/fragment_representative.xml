@@ -63,7 +63,7 @@
 
         <Spinner
             android:id="@+id/state"
-            stateValue="@{viewModel.address.state}"
+            state="@{viewModel.address.state}"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:autofillHints="postalAddress"
