@@ -26,7 +26,6 @@ class RepresentativeListAdapter : ListAdapter<Representative, RepresentativeList
 
     class RepresentativeViewHolder(val binding: ItemRepresentativeBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        //TODO: Add companion object to inflate ViewHolder (from)
         companion object {
 
             private const val FACEBOOK_LABEL = "Facebook"
@@ -48,10 +47,8 @@ class RepresentativeListAdapter : ListAdapter<Representative, RepresentativeList
             binding.representative = item
             binding.representativePhoto.setImageResource(R.drawable.ic_profile)
 
-            //TODO: Show social links ** Hint: Use provided helper methods
             item.official.channels?.let { showSocialLinks(it) }
 
-            //TODO: Show www link ** Hint: Use provided helper methods
             item.official.urls?.let { showWWWLinks(it) }
 
             binding.executePendingBindings()
@@ -97,7 +94,6 @@ class RepresentativeListAdapter : ListAdapter<Representative, RepresentativeList
         }
     }
 
-    //TODO: Create RepresentativeDiffCallback
     class RepresentativeDiffCallback : DiffUtil.ItemCallback<Representative>() {
         override fun areItemsTheSame(oldItem: Representative, newItem: Representative): Boolean =
             oldItem.office == newItem.office && oldItem.official == newItem.official

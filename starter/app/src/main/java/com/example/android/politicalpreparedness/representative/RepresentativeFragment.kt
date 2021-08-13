@@ -32,39 +32,32 @@ import java.util.Locale
 class DetailFragment : Fragment() {
 
     companion object {
-        //TODO: Add Constant for Location request
         private const val REQUEST_LOCATION_PERMISSION = 1001
         private const val LOCATION_PERMISSION_INDEX = 0
     }
 
-    //TODO: Declare ViewModel
     private lateinit var binding: FragmentRepresentativeBinding
     private val viewModel: RepresentativeViewModel by viewModels()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        //TODO: Establish bindings
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_representative, container, false)
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
 
-        // spinner :O
         ArrayAdapter.createFromResource(binding.root.context, R.array.states, android.R.layout.simple_spinner_item).also { adapter ->
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             binding.state.adapter = adapter
         }
 
-        //TODO: Define and assign Representative adapter
         val representativeAdapter = RepresentativeListAdapter()
         binding.myRepresentativeRecycler.adapter = representativeAdapter
 
-        //TODO: Populate Representative adapter
         viewModel.representatives.observe(viewLifecycleOwner, { reps ->
             reps.let {
                 representativeAdapter.submitList(it)
             }
         })
 
-        //TODO: Establish button listeners for field and location search
         binding.buttonSearch.setOnClickListener {
             hideKeyboard()
             val address = Address(
@@ -89,7 +82,6 @@ class DetailFragment : Fragment() {
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        //TODO: Handle location permission result to get location on permission granted
         if (
             grantResults.isEmpty() ||
             grantResults[LOCATION_PERMISSION_INDEX] == PackageManager.PERMISSION_DENIED
@@ -119,7 +111,6 @@ class DetailFragment : Fragment() {
         if (isPermissionGranted()) {
             true
         } else {
-            //TODO: Request Location permissions
             ActivityCompat.requestPermissions(
                 requireActivity(),
                 arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
@@ -129,18 +120,15 @@ class DetailFragment : Fragment() {
         }
 
     private fun isPermissionGranted(): Boolean =
-        //TODO: Check if permission is already granted and return (true = granted, false = denied/other)
         PackageManager.PERMISSION_GRANTED == ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION)
 
 
     @SuppressLint("MissingPermission")
     private fun getLocation() {
-        //TODO: Get location from LocationServices
         val locationClient: FusedLocationProviderClient = getFusedLocationProviderClient(requireActivity())
 
         locationClient.lastLocation
-            .addOnSuccessListener { location -> // GPS location can be null if GPS is switched off
-                //TODO: The geoCodeLocation method is a helper function to change the lat/long location to a human readable street address
+            .addOnSuccessListener { location ->
                 location?.let {
                     val address = geoCodeLocation(it)
                     viewModel.onSearchRepresentativesByAddress(address)

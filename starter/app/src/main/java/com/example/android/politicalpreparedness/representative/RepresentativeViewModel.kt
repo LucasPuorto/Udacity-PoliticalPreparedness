@@ -11,14 +11,12 @@ import kotlinx.coroutines.launch
 
 class RepresentativeViewModel : ViewModel() {
 
-    //TODO: Establish live data for representatives and address
     private val _representatives = MutableLiveData<List<Representative>>()
     val representatives: LiveData<List<Representative>> get() = _representatives
 
     private val _address = MutableLiveData<Address>()
     val address: LiveData<Address> get() = _address
 
-    //TODO: Create function to fetch representatives from API from a provided address
     /**
      *  The following code will prove helpful in constructing a representative from the API. This code combines the two nodes of the RepresentativeResponse into a single official :
 
@@ -48,11 +46,8 @@ class RepresentativeViewModel : ViewModel() {
         }
     }
 
-    //TODO: Create function get address from geo location
     fun onSearchRepresentativesByAddress(address: Address) {
         _address.value = address
         findMatchingRepresentatives()
     }
-
-    //TODO: Create function to get address from individual fields
 }

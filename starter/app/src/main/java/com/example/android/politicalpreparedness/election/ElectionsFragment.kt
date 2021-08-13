@@ -16,7 +16,6 @@ import com.example.android.politicalpreparedness.election.adapter.ElectionListen
 
 class ElectionsFragment : Fragment() {
 
-    //TODO: Declare ViewModel
     private val viewModel: ElectionsViewModel by viewModels {
         ElectionsViewModelFactory(ElectionDatabase.getInstance(requireContext()).electionDao)
     }
@@ -31,8 +30,6 @@ class ElectionsFragment : Fragment() {
     })
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        //TODO: Add ViewModel values and create ViewModel
-        //TODO: Add binding values
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_election, container, false)
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
@@ -52,7 +49,6 @@ class ElectionsFragment : Fragment() {
     }
 
     private fun observes() {
-        //TODO: Populate recycler adapters
         viewModel.upcomingElections.observe(viewLifecycleOwner, { elections ->
             elections?.let {
                 upcomingAdapter.submitList(it)
@@ -65,7 +61,6 @@ class ElectionsFragment : Fragment() {
             }
         })
 
-        //TODO: Link elections to voter info
         viewModel.navigateToSelectedElection.observe(viewLifecycleOwner, { election ->
             if (election != null) {
                 findNavController().navigate(
@@ -76,12 +71,8 @@ class ElectionsFragment : Fragment() {
         })
     }
 
-    //TODO: Initiate recycler adapters
     private fun setupRecyclerView() {
         binding.rvUpcomingElections.adapter = upcomingAdapter
         binding.rvSavedElections.adapter = savedAdapter
     }
-
-    //TODO: Refresh adapters when fragment loads
-
 }

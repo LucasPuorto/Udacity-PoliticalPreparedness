@@ -26,9 +26,7 @@ class VoterInfoFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        //TODO: Add binding values
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_voter_info, container, false)
-        //TODO: Add ViewModel values and create ViewModel
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
 
@@ -41,14 +39,12 @@ class VoterInfoFragment : Fragment() {
     }
 
     private fun observes() {
-        //TODO: Populate voter info -- hide views without provided data.
         /**
          * Hint: You will need to ensure proper data is provided from previous fragment.
          */
         viewModel.electionAdministrationBody.observe(viewLifecycleOwner, { administrationBody ->
             binding.addressGroup.visibility = if (administrationBody.correspondenceAddress != null) View.VISIBLE else View.GONE
 
-            //TODO: Handle loading of URLs
             if (administrationBody.ballotInfoUrl != null) {
                 binding.stateBallot.apply {
                     visibility = View.VISIBLE
@@ -72,9 +68,7 @@ class VoterInfoFragment : Fragment() {
             }
         })
 
-        //TODO: Handle save button UI state
         viewModel.voterInfoIsSaved.observe(viewLifecycleOwner, { isStateSaved ->
-            //TODO: cont'd Handle save button clicks
             when (isStateSaved) {
                 false -> {
                     binding.mbtFollow.apply {
@@ -100,7 +94,6 @@ class VoterInfoFragment : Fragment() {
         })
     }
 
-    //TODO: Create method to load URL intents
     private fun loadUrlIntent(url: String) {
         val intent = Intent(Intent.ACTION_VIEW)
         intent.data = Uri.parse(url)
