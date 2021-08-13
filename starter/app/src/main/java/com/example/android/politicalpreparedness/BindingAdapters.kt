@@ -1,12 +1,24 @@
-package com.example.android.politicalpreparedness.representative.adapter
+package com.example.android.politicalpreparedness
 
 import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.Spinner
+import android.widget.TextView
 import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
-import com.example.android.politicalpreparedness.R
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
+
+private const val DATE_PATERN_EEE_MMM_dd_yyyy = "EEE MMM dd yyyy"
+
+@BindingAdapter("dateString")
+fun dateToString(textView: TextView, date: Date?) {
+    if (date != null) {
+        textView.text = SimpleDateFormat(DATE_PATERN_EEE_MMM_dd_yyyy, Locale.US).format(date)
+    }
+}
 
 @BindingAdapter("profileImage")
 fun fetchImage(view: ImageView, src: String?) {
@@ -34,6 +46,6 @@ fun Spinner.setNewValue(value: String?) {
     }
 }
 
-inline fun <reified T> toTypedAdapter(adapter: ArrayAdapter<*>): ArrayAdapter<T>{
+inline fun <reified T> toTypedAdapter(adapter: ArrayAdapter<*>): ArrayAdapter<T> {
     return adapter as ArrayAdapter<T>
 }
