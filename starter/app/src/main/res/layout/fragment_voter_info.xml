@@ -51,7 +51,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_16"
             android:text="@string/election_information"
-            app:layout_constraintEnd_toEndOf="@+id/election_date"
+            app:layout_constraintEnd_toEndOf="@id/election_date"
             app:layout_constraintStart_toStartOf="@id/election_date"
             app:layout_constraintTop_toBottomOf="@id/election_date" />
 
@@ -69,7 +69,7 @@
             android:text="@string/voting_locations"
             android:visibility="gone"
             app:drawableStartCompat="@drawable/ic_outline_search"
-            app:layout_constraintEnd_toEndOf="@+id/election_date"
+            app:layout_constraintEnd_toEndOf="@id/election_date"
             app:layout_constraintStart_toStartOf="@id/election_date"
             app:layout_constraintTop_toBottomOf="@id/state_header"
             tools:text="Voting Locations"
@@ -82,7 +82,7 @@
             android:text="@string/ballot_information"
             android:visibility="gone"
             app:drawableStartCompat="@drawable/ic_outline_search"
-            app:layout_constraintEnd_toEndOf="@+id/state_locations"
+            app:layout_constraintEnd_toEndOf="@id/state_locations"
             app:layout_constraintStart_toStartOf="@id/election_date"
             app:layout_constraintTop_toBottomOf="@id/state_locations"
             tools:visibility="visible" />
@@ -101,7 +101,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@string/address_information"
-            app:layout_constraintEnd_toEndOf="@+id/election_date"
+            app:layout_constraintEnd_toEndOf="@id/election_date"
             app:layout_constraintStart_toStartOf="@id/election_date"
             app:layout_constraintTop_toBottomOf="@id/state_ballot" />
 
@@ -111,7 +111,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@{viewModel.voterInfoAddress}"
-            app:layout_constraintEnd_toEndOf="@+id/election_date"
+            app:layout_constraintEnd_toEndOf="@id/election_date"
             app:layout_constraintStart_toStartOf="@id/election_date"
             app:layout_constraintTop_toBottomOf="@id/state_correspondence_header" />
 

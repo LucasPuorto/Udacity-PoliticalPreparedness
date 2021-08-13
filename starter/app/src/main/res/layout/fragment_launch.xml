@@ -26,7 +26,7 @@
             android:layout_marginStart="@dimen/margin_24"
             android:layout_marginEnd="@dimen/margin_24"
             android:layout_marginBottom="@dimen/margin_16"
-            android:text="upcoming elections"
+            android:text="@string/upcoming_elections"
             app:layout_constraintBottom_toTopOf="@id/mbt_find_my_representatives"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
@@ -39,7 +39,7 @@
             android:layout_marginStart="@dimen/margin_24"
             android:layout_marginEnd="@dimen/margin_24"
             android:layout_marginBottom="@dimen/margin_32"
-            android:text="find my representatives"
+            android:text="@string/find_my_representatives"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

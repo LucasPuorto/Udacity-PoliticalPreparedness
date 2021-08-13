@@ -15,13 +15,14 @@
         android:layout_height="wrap_content">
 
         <ImageView
-            android:id="@+id/representativePhoto"
+            android:id="@+id/representative_photo"
             android:layout_width="@dimen/width_75"
             android:layout_height="@dimen/height_75"
             android:layout_marginStart="@dimen/margin_4"
-            app:layout_constraintBottom_toBottomOf="@+id/party_name"
+            android:importantForAccessibility="no"
+            app:layout_constraintBottom_toBottomOf="@id/party_name"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/title"
+            app:layout_constraintTop_toTopOf="@id/title"
             app:profileImage="@{representative.official.photoUrl}"
             tools:src="@drawable/ic_profile" />
 
@@ -36,7 +37,7 @@
             android:text="@{representative.office.name}"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/representativePhoto"
+            app:layout_constraintStart_toEndOf="@id/representative_photo"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="President of The United States" />
 
@@ -49,7 +50,7 @@
             android:ellipsize="end"
             android:maxLines="1"
             android:text="@{representative.official.name}"
-            app:layout_constraintEnd_toStartOf="@id/wwwIcon"
+            app:layout_constraintEnd_toStartOf="@id/www_icon"
             app:layout_constraintStart_toStartOf="@id/title"
             app:layout_constraintTop_toBottomOf="@id/title"
             tools:text="Joe Biden" />
@@ -70,15 +71,15 @@
             tools:text="Democratic Party" />
 
         <ImageView
-            android:id="@+id/wwwIcon"
+            android:id="@+id/www_icon"
             android:layout_width="@dimen/with_32"
             android:layout_height="@dimen/height_32"
             android:layout_marginEnd="@dimen/margin_8"
             android:src="@drawable/ic_www"
             android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="@+id/twitter_icon"
-            app:layout_constraintEnd_toStartOf="@+id/facebook_icon"
-            app:layout_constraintTop_toTopOf="@+id/twitter_icon"
+            app:layout_constraintBottom_toBottomOf="@id/twitter_icon"
+            app:layout_constraintEnd_toStartOf="@id/facebook_icon"
+            app:layout_constraintTop_toTopOf="@id/twitter_icon"
             tools:visibility="visible" />
 
         <ImageView
@@ -89,8 +90,8 @@
             android:src="@drawable/ic_facebook"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@id/twitter_icon"
-            app:layout_constraintEnd_toStartOf="@+id/twitter_icon"
-            app:layout_constraintTop_toTopOf="@+id/twitter_icon"
+            app:layout_constraintEnd_toStartOf="@id/twitter_icon"
+            app:layout_constraintTop_toTopOf="@id/twitter_icon"
             tools:visibility="visible" />
 
         <ImageView
