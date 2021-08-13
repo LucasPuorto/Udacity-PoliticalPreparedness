@@ -29,7 +29,7 @@ class RepresentativeListAdapter : ListAdapter<Representative, RepresentativeList
         //TODO: Add companion object to inflate ViewHolder (from)
         companion object {
 
-            private const val FACEBOOK_LABEL = "Facebook/"
+            private const val FACEBOOK_LABEL = "Facebook"
             private const val FACEBOOK_BASE_URL = "https://www.facebook.com/"
             private const val TWITTER_LABEL = "Twitter"
             private const val TWITTER_BASE_URL = "https://www.twitter.com/"
