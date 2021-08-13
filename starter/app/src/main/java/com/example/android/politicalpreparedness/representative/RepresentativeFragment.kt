@@ -110,8 +110,13 @@ class DetailFragment : Fragment() {
         }
     }
 
-    private fun checkLocationPermissions(): Boolean {
-        return if (isPermissionGranted()) {
+    private fun hideKeyboard() {
+        val imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(view?.windowToken, 0)
+    }
+
+    private fun checkLocationPermissions(): Boolean =
+        if (isPermissionGranted()) {
             true
         } else {
             //TODO: Request Location permissions
@@ -122,12 +127,11 @@ class DetailFragment : Fragment() {
             )
             false
         }
-    }
 
-    private fun isPermissionGranted(): Boolean {
+    private fun isPermissionGranted(): Boolean =
         //TODO: Check if permission is already granted and return (true = granted, false = denied/other)
-        return PackageManager.PERMISSION_GRANTED == ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION)
-    }
+        PackageManager.PERMISSION_GRANTED == ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION)
+
 
     @SuppressLint("MissingPermission")
     private fun getLocation() {
@@ -147,17 +151,11 @@ class DetailFragment : Fragment() {
             }
     }
 
-    private fun geoCodeLocation(location: Location): Address {
-        val geocoder = Geocoder(context, Locale.getDefault())
-        return geocoder.getFromLocation(location.latitude, location.longitude, 1)
+    private fun geoCodeLocation(location: Location): Address =
+        Geocoder(context, Locale.getDefault())
+            .getFromLocation(location.latitude, location.longitude, 1)
             .map { address ->
                 Address(address.thoroughfare, address.subThoroughfare, address.locality, address.adminArea, address.postalCode)
             }
             .first()
-    }
-
-    private fun hideKeyboard() {
-        val imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.hideSoftInputFromWindow(view?.windowToken, 0)
-    }
 }

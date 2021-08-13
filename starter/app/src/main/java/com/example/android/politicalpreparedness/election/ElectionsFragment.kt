@@ -41,7 +41,7 @@ class ElectionsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        observables()
+        observes()
         setupRecyclerView()
     }
 
@@ -51,7 +51,7 @@ class ElectionsFragment : Fragment() {
         viewModel.getUpcomingElections()
     }
 
-    private fun observables() {
+    private fun observes() {
         //TODO: Populate recycler adapters
         viewModel.upcomingElections.observe(viewLifecycleOwner, { elections ->
             elections?.let {

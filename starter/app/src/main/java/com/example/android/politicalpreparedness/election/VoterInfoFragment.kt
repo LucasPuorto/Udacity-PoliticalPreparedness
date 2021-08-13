@@ -37,6 +37,10 @@ class VoterInfoFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        observes()
+    }
+
+    private fun observes() {
         //TODO: Populate voter info -- hide views without provided data.
         /**
          * Hint: You will need to ensure proper data is provided from previous fragment.
