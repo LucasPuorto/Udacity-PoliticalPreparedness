@@ -20,4 +20,5 @@
     <!-- Height -->
     <dimen name="height_32">32dp</dimen>
     <dimen name="height_75">75dp</dimen>
+    <dimen name="font_16">16sp</dimen>
 </resources>

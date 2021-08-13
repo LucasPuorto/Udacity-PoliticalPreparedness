@@ -1,5 +1,6 @@
 package com.example.android.politicalpreparedness.election
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +14,7 @@ import com.example.android.politicalpreparedness.database.ElectionDatabase
 import com.example.android.politicalpreparedness.databinding.FragmentElectionBinding
 import com.example.android.politicalpreparedness.election.adapter.ElectionListAdapter
 import com.example.android.politicalpreparedness.election.adapter.ElectionListener
+import com.example.android.politicalpreparedness.network.models.Election
 
 class ElectionsFragment : Fragment() {
 
@@ -42,6 +44,7 @@ class ElectionsFragment : Fragment() {
         setupRecyclerView()
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     override fun onResume() {
         super.onResume()
         savedAdapter.notifyDataSetChanged()
@@ -49,26 +52,32 @@ class ElectionsFragment : Fragment() {
     }
 
     private fun observes() {
-        viewModel.upcomingElections.observe(viewLifecycleOwner, { elections ->
-            elections?.let {
-                upcomingAdapter.submitList(it)
-            }
-        })
+        viewModel.run {
+            upcomingElections.observe(viewLifecycleOwner, { elections ->
+                elections?.let {
+                    upcomingAdapter.submitList(it)
+                }
+            })
 
-        viewModel.savedElections.observe(viewLifecycleOwner, { elections ->
-            elections?.let {
-                savedAdapter.submitList(it)
-            }
-        })
+            savedElections.observe(viewLifecycleOwner, { elections ->
+                elections?.let {
+                    savedAdapter.submitList(it)
+                }
+            })
 
-        viewModel.navigateToSelectedElection.observe(viewLifecycleOwner, { election ->
-            if (election != null) {
-                findNavController().navigate(
-                    ElectionsFragmentDirections.actionElectionsFragmentToVoterInfoFragment(election.id, election.division)
-                )
-                viewModel.navigationIsCompleted()
-            }
-        })
+            navigateToSelectedElection.observe(viewLifecycleOwner, { election ->
+                if (election != null) {
+                    startVoteInfoFragment(election)
+                    viewModel.navigationIsCompleted()
+                }
+            })
+        }
+    }
+
+    private fun startVoteInfoFragment(election: Election) {
+        findNavController().navigate(
+            ElectionsFragmentDirections.actionElectionsFragmentToVoterInfoFragment(election.id, election.division)
+        )
     }
 
     private fun setupRecyclerView() {

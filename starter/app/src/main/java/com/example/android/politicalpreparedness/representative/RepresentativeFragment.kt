@@ -52,12 +52,21 @@ class DetailFragment : Fragment() {
         val representativeAdapter = RepresentativeListAdapter()
         binding.myRepresentativeRecycler.adapter = representativeAdapter
 
+        observe(representativeAdapter)
+
+        setupClickListeners()
+        return binding.root
+    }
+
+    private fun observe(representativeAdapter: RepresentativeListAdapter) {
         viewModel.representatives.observe(viewLifecycleOwner, { reps ->
             reps.let {
                 representativeAdapter.submitList(it)
             }
         })
+    }
 
+    private fun setupClickListeners() {
         binding.buttonSearch.setOnClickListener {
             hideKeyboard()
             val address = Address(
@@ -76,8 +85,6 @@ class DetailFragment : Fragment() {
                 getLocation()
             }
         }
-
-        return binding.root
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {

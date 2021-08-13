@@ -42,56 +42,58 @@ class VoterInfoFragment : Fragment() {
         /**
          * Hint: You will need to ensure proper data is provided from previous fragment.
          */
-        viewModel.electionAdministrationBody.observe(viewLifecycleOwner, { administrationBody ->
-            binding.addressGroup.visibility = if (administrationBody.correspondenceAddress != null) View.VISIBLE else View.GONE
+        viewModel.run {
+            electionAdministrationBody.observe(viewLifecycleOwner, { administrationBody ->
+                binding.addressGroup.visibility = if (administrationBody.correspondenceAddress != null) View.VISIBLE else View.GONE
 
-            if (administrationBody.ballotInfoUrl != null) {
-                binding.stateBallot.apply {
-                    visibility = View.VISIBLE
-                    setOnClickListener {
-                        loadUrlIntent(administrationBody.ballotInfoUrl)
-                    }
-                }
-            } else {
-                binding.stateBallot.visibility = View.GONE
-            }
-
-            if (administrationBody.votingLocationFinderUrl != null) {
-                binding.stateLocations.apply {
-                    visibility = View.VISIBLE
-                    setOnClickListener {
-                        loadUrlIntent(administrationBody.votingLocationFinderUrl)
-                    }
-                }
-            } else {
-                binding.stateLocations.visibility = View.GONE
-            }
-        })
-
-        viewModel.voterInfoIsSaved.observe(viewLifecycleOwner, { isStateSaved ->
-            when (isStateSaved) {
-                false -> {
-                    binding.mbtFollow.apply {
-                        text = getString(R.string.follow)
-
+                if (administrationBody.ballotInfoUrl != null) {
+                    binding.stateBallot.apply {
+                        visibility = View.VISIBLE
                         setOnClickListener {
-                            viewModel.saveElectionToDatabase()
-                            Toast.makeText(context, R.string.election_saved, Toast.LENGTH_SHORT).show()
+                            loadUrlIntent(administrationBody.ballotInfoUrl)
+                        }
+                    }
+                } else {
+                    binding.stateBallot.visibility = View.GONE
+                }
+
+                if (administrationBody.votingLocationFinderUrl != null) {
+                    binding.stateLocations.apply {
+                        visibility = View.VISIBLE
+                        setOnClickListener {
+                            loadUrlIntent(administrationBody.votingLocationFinderUrl)
+                        }
+                    }
+                } else {
+                    binding.stateLocations.visibility = View.GONE
+                }
+            })
+
+            voterInfoIsSaved.observe(viewLifecycleOwner, { isStateSaved ->
+                when (isStateSaved) {
+                    false -> {
+                        binding.mbtFollow.apply {
+                            text = getString(R.string.follow)
+
+                            setOnClickListener {
+                                viewModel.saveElectionToDatabase()
+                                Toast.makeText(context, R.string.election_saved, Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                    }
+                    true -> {
+                        binding.mbtFollow.apply {
+                            text = getString(R.string.unfollow)
+
+                            setOnClickListener {
+                                viewModel.deleteElectionByIdFromDatabase()
+                                Toast.makeText(context, R.string.election_deleted, Toast.LENGTH_SHORT).show()
+                            }
                         }
                     }
                 }
-                true -> {
-                    binding.mbtFollow.apply {
-                        text = getString(R.string.unfollow)
-
-                        setOnClickListener {
-                            viewModel.deleteElectionByIdFromDatabase()
-                            Toast.makeText(context, R.string.election_deleted, Toast.LENGTH_SHORT).show()
-                        }
-                    }
-                }
-            }
-        })
+            })
+        }
     }
 
     private fun loadUrlIntent(url: String) {

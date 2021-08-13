@@ -3,6 +3,7 @@ package com.example.android.politicalpreparedness.election
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.android.politicalpreparedness.database.ElectionDao
 import com.example.android.politicalpreparedness.network.CivicsApi
@@ -44,5 +45,15 @@ class ElectionsViewModel(electionDao: ElectionDao) : ViewModel() {
 
     fun navigationIsCompleted() {
         _navigateToSelectedElection.value = null
+    }
+}
+
+class ElectionsViewModelFactory(private val electionDao: ElectionDao): ViewModelProvider.Factory {
+
+    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+        if (modelClass.isAssignableFrom(ElectionsViewModel::class.java)) {
+            return ElectionsViewModel(electionDao) as T
+        }
+        throw IllegalArgumentException("Unknown ViewModel class")
     }
 }
