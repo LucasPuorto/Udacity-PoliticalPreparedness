@@ -8,17 +8,19 @@ import java.util.Locale
 
 class DateAdapter {
 
+    companion object {
+        private const val DATE_PATER_yyyy_MM_dd = "yyyy-MM-dd"
+    }
+
     @FromJson
     fun dateFromJson(electionDay: String): Date {
-        val pattern = "yyyy-MM-dd"
-        val simpleDateFormat = SimpleDateFormat(pattern, Locale.getDefault())
+        val simpleDateFormat = SimpleDateFormat(DATE_PATER_yyyy_MM_dd, Locale.getDefault())
         return simpleDateFormat.parse(electionDay)!!
     }
 
     @ToJson
     fun dateToJson(electionDay: Date): String {
-        val pattern = "yyyy-MM-dd"
-        val simpleDateFormat = SimpleDateFormat(pattern, Locale.getDefault())
+        val simpleDateFormat = SimpleDateFormat(DATE_PATER_yyyy_MM_dd, Locale.getDefault())
         return simpleDateFormat.format(electionDay)
     }
 }
