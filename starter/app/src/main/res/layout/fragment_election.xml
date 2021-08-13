@@ -3,7 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- TODO: Add node to connect Election ViewModel -->
     <data>
 
         <variable
@@ -16,14 +15,13 @@
         android:layout_height="match_parent"
         tools:context="com.example.android.politicalpreparedness.MainActivity">
 
-        <!-- TODO: Add Upcoming Election Recycler and Header -->
         <TextView
             android:id="@+id/tv_header_upcoming_elections"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_24"
+            android:layout_marginStart="@dimen/margin_4"
             android:layout_marginTop="@dimen/margin_16"
-            android:layout_marginEnd="@dimen/margin_24"
+            android:layout_marginEnd="@dimen/margin_4"
             android:text="@string/upcoming_elections"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             app:layout_constraintEnd_toEndOf="parent"
@@ -34,46 +32,57 @@
             android:id="@+id/rv_upcoming_elections"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_24"
+            android:layout_marginStart="@dimen/margin_4"
             android:layout_marginTop="@dimen/margin_8"
-            android:layout_marginEnd="@dimen/margin_24"
+            android:layout_marginEnd="@dimen/margin_4"
+            android:layout_marginBottom="@dimen/margin_8"
             android:clipToPadding="false"
             android:paddingBottom="@dimen/padding_8"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toTopOf="@id/guideline_half_screen"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_header_upcoming_elections"
+            app:layout_constraintVertical_bias="0"
             tools:itemCount="5"
             tools:listitem="@layout/item_election" />
 
-        <!-- TODO: Add Saved Election Recycler and Header -->
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_half_screen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.5" />
+
         <TextView
             android:id="@+id/tv_header_saved_elections"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_24"
-            android:layout_marginTop="@dimen/margin_16"
-            android:layout_marginEnd="@dimen/margin_24"
+            android:layout_marginStart="@dimen/margin_4"
+            android:layout_marginEnd="@dimen/margin_4"
             android:text="@string/saved_elections"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/rv_upcoming_elections" />
+            app:layout_constraintTop_toBottomOf="@id/guideline_half_screen" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_saved_elections"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_24"
+            android:layout_marginStart="@dimen/margin_4"
             android:layout_marginTop="@dimen/margin_8"
-            android:layout_marginEnd="@dimen/margin_24"
+            android:layout_marginEnd="@dimen/margin_4"
+            android:layout_marginBottom="@dimen/margin_8"
             android:clipToPadding="false"
             android:nestedScrollingEnabled="false"
             android:paddingBottom="@dimen/padding_8"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_header_saved_elections"
+            app:layout_constraintVertical_bias="0"
             tools:itemCount="4"
             tools:listitem="@layout/item_election" />
     </androidx.constraintlayout.widget.ConstraintLayout>

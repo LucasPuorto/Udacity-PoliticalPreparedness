@@ -6,7 +6,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <!-- TODO: Add image for home screen logo. -->
         <ImageView
             android:id="@+id/iv_home_logo"
             android:layout_width="wrap_content"
@@ -18,7 +17,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <!-- TODO: Add Button to navigate to upcoming elections. -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/mbt_upcoming_elections"
             android:layout_width="0dp"
@@ -31,7 +29,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
-        <!-- TODO: Add Button to navigate to representatives. -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/mbt_find_my_representatives"
             android:layout_width="0dp"

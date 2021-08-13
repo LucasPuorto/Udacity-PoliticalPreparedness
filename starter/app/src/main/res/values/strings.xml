@@ -28,6 +28,9 @@
     <string name="settings">settings</string>
     <string name="voting_locations">Voting Locations</string>
     <string name="address_information">Address Information</string>
+    <string name="content_description_site">site</string>
+    <string name="content_description_facebook">facebook</string>
+    <string name="content_description_twitter">twitter</string>
 
     <!-- Election Fragment -->
     <string name="saved_elections">Saved Elections</string>
