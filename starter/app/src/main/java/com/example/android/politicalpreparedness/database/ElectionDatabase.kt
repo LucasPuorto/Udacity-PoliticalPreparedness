@@ -9,11 +9,13 @@ import com.example.android.politicalpreparedness.network.models.Election
 
 @Database(entities = [Election::class], version = 1, exportSchema = false)
 @TypeConverters(Converters::class)
-abstract class ElectionDatabase: RoomDatabase() {
+abstract class ElectionDatabase : RoomDatabase() {
 
     abstract val electionDao: ElectionDao
 
     companion object {
+
+        private const val DATABASE_BUILDER_NAME = "election_database"
 
         @Volatile
         private var INSTANCE: ElectionDatabase? = null
@@ -23,20 +25,16 @@ abstract class ElectionDatabase: RoomDatabase() {
                 var instance = INSTANCE
                 if (instance == null) {
                     instance = Room.databaseBuilder(
-                            context.applicationContext,
-                            ElectionDatabase::class.java,
-                            "election_database"
-                    )
-                            .fallbackToDestructiveMigration()
-                            .build()
+                        context.applicationContext,
+                        ElectionDatabase::class.java,
+                        DATABASE_BUILDER_NAME
+                    ).fallbackToDestructiveMigration()
+                        .build()
 
                     INSTANCE = instance
                 }
-
                 return instance
             }
         }
-
     }
-
 }
